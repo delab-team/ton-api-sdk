@@ -22,6 +22,8 @@ export class TonApi {
 
   private _network: 'testnet' | 'mainnet'
 
+  private _token: string
+
   public Blockchain: Blockchain
   public Emulation: Emulation
   public Accounts: Accounts
@@ -57,8 +59,6 @@ export class TonApi {
     this.Events = new Events(this)
     this.Jettons = new Jettons(this)
   }
-
-  private _token: string = 'AFXRKLZM2YCJ67AAAAAE4XDRSACSYEOYKQKOSUVUKMXNMP2AKUTWJ2UVBPTTQZWRGZMLALY'
 
   public async get(url: string, data: any, headers: Record<string, string> = {}): Promise<any | undefined> {
     let urlFull;
