@@ -1,5 +1,8 @@
 import { LiteServer } from "./lite-server";
 import axios, { AxiosRequestConfig } from 'axios';
+import { Blockchain } from './blockchain';
+import { Accounts } from './accounts';
+import { NFT } from './nft';
 
 import { Blockchain } from './blockchain';
 import { Emulation } from "./emulation";
@@ -21,38 +24,8 @@ export class TonApi {
 
   private _network: 'testnet' | 'mainnet'
 
-  public Blockchain: Blockchain
-  public Emulation: Emulation
-  public Accounts: Accounts
-  public NFT: NFT
-  public DNS: DNS
-  public Traces: Traces
-  public Staking: Staking
-  public Storage: Storage
-  public Rates: Rates
-  public Connect: Connect
-  public Wallet: Wallet
-  public LiteServer: LiteServer
-  public Events: Events
-
-  constructor (token: string, network: 'testnet' | 'mainnet') {
+  constructor (network: 'testnet' | 'mainnet') {
     this._network = network
-
-    this._token = token
-
-    this.Blockchain = new Blockchain(this)
-    this.Emulation = new Emulation(this)
-    this.Accounts = new Accounts(this)
-    this.NFT = new NFT(this)
-    this.DNS = new DNS(this)
-    this.Traces = new Traces(this)
-    this.Staking = new Staking(this)
-    this.Storage = new Storage(this)
-    this.Rates = new Rates(this)
-    this.Connect = new Connect(this)
-    this.Wallet = new Wallet(this)
-    this.LiteServer = new LiteServer(this)
-    this.Events = new Events(this)
   }
 
   private _token: string = 'AFXRKLZM2YCJ67AAAAAE4XDRSACSYEOYKQKOSUVUKMXNMP2AKUTWJ2UVBPTTQZWRGZMLALY'
