@@ -1,6 +1,7 @@
 
 import { Configuration, SourceMapDevToolPlugin, ProvidePlugin } from 'webpack';
 import path from 'path';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import 'webpack-dev-server';
 
 const config: Configuration = {
@@ -24,7 +25,6 @@ const config: Configuration = {
                 use: 'ts-loader',
                 exclude: /node_modules/,
             },
-            
             {
                 test: /\.js$/,
                 enforce: 'pre',
@@ -41,10 +41,12 @@ const config: Configuration = {
     plugins: [
         new SourceMapDevToolPlugin({ filename: '[file].map' }),
         new ProvidePlugin({ process: 'process/browser.js' }),
-        // new MiniCssExtractPlugin({
-        //     filename: '../../styles/[name].css',
-        // }),
-        
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'src/logic', to: '../dist/logic' },
+                { from: 'src/types', to: '../dist/types' },
+            ],
+        }),
     ],
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],

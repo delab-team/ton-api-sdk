@@ -1,4 +1,18 @@
+import { LiteServer } from "./lite-server";
 import axios, { AxiosRequestConfig } from 'axios';
+
+import { Blockchain } from './blockchain';
+import { Emulation } from "./emulation";
+import { Accounts } from './accounts';
+import { NFT } from './nft';
+import { DNS } from './dns';
+import { Traces } from './traces';
+import { Staking } from './staking';
+import { Storage } from './storage';
+import { Rates } from './rates';
+import { Connect } from './connect';
+import { Wallet } from './wallet';
+import { Events } from "./events";
 
 export class TonApi {
   private _url: string = 'https://tonapi.io/v2/'
@@ -7,82 +21,125 @@ export class TonApi {
 
   private _network: 'testnet' | 'mainnet'
 
-  constructor (network: 'testnet' | 'mainnet') {
+  public Blockchain: Blockchain
+  public Emulation: Emulation
+  public Accounts: Accounts
+  public NFT: NFT
+  public DNS: DNS
+  public Traces: Traces
+  public Staking: Staking
+  public Storage: Storage
+  public Rates: Rates
+  public Connect: Connect
+  public Wallet: Wallet
+  public LiteServer: LiteServer
+  public Events: Events
+
+  constructor (token: string, network: 'testnet' | 'mainnet') {
     this._network = network
+
+    this._token = token
+
+    this.Blockchain = new Blockchain(this)
+    this.Emulation = new Emulation(this)
+    this.Accounts = new Accounts(this)
+    this.NFT = new NFT(this)
+    this.DNS = new DNS(this)
+    this.Traces = new Traces(this)
+    this.Staking = new Staking(this)
+    this.Storage = new Storage(this)
+    this.Rates = new Rates(this)
+    this.Connect = new Connect(this)
+    this.Wallet = new Wallet(this)
+    this.LiteServer = new LiteServer(this)
+    this.Events = new Events(this)
   }
 
   private _token: string = 'AFXRKLZM2YCJ67AAAAAE4XDRSACSYEOYKQKOSUVUKMXNMP2AKUTWJ2UVBPTTQZWRGZMLALY'
 
-  public async get (url: string, data: any): Promise<any | undefined> {
-    let urlFull
+  public async get(url: string, data: any, headers: Record<string, string> = {}): Promise<any | undefined> {
+    let urlFull;
     if (this._network === 'mainnet') {
-      urlFull = this._url
+      urlFull = this._url;
     }
     if (this._network === 'testnet') {
-      urlFull = this._urlTest
+      urlFull = this._urlTest;
     }
-
-    const res = await axios.get(`${urlFull}${url}?${new URLSearchParams(data)}`, { headers: { Authorization: `Bearer ${this._token}` } })
-
+  
+    const config = {
+      headers: {
+        ...headers,
+        Authorization: `Bearer ${this._token}`
+      }
+    };
+  
+    const res = await axios.get(`${urlFull}${url}?${new URLSearchParams(data)}`, config);
+  
     if (res.data.error) {
-      console.error(res.data.result)
-      return undefined
+      console.error(res.data.result);
+      return undefined;
     }
-
-    return res.data
+  
+    return res.data;
   }
 
-  public async post(url: string, data: any): Promise<any | undefined> {
+  public async post(url: string, data: any, headers: Record<string, string> = {}): Promise<any | undefined> {
     let urlFull;
     if (this._network === 'mainnet') {
-      urlFull = this._url;
+        urlFull = this._url;
     } else if (this._network === 'testnet') {
-      urlFull = this._urlTest;
+        urlFull = this._urlTest;
     }
 
     const config: AxiosRequestConfig = {
-      headers: { Authorization: `Bearer ${this._token}` }
+        headers: {
+            ...headers,
+            Authorization: `Bearer ${this._token}`
+        }
     };
 
     try {
-      const res = await axios.post(`${urlFull}${url}`, data, config);
+        const res = await axios.post(`${urlFull}${url}`, data, config);
 
-      if (res.data.error) {
-        console.error(res.data.result);
+        if (res.data.error) {
+            console.error(res.data.result);
+            return undefined;
+        }
+
+        return res.data;
+    } catch (error) {
+        console.error(error);
         return undefined;
+    }
+}
+
+  public async put(url: string, data: any, headers: Record<string, string> = {}): Promise<any | undefined> {
+      let urlFull;
+      if (this._network === 'mainnet') {
+          urlFull = this._url;
+      } else if (this._network === 'testnet') {
+          urlFull = this._urlTest;
       }
 
-      return res.data;
-    } catch (error) {
-      console.error(error);
-      return undefined;
-    }
-  }
+      const config: AxiosRequestConfig = {
+          headers: {
+              ...headers,
+              Authorization: `Bearer ${this._token}`
+          }
+      };
 
-  public async put(url: string, data: any): Promise<any | undefined> {
-    let urlFull;
-    if (this._network === 'mainnet') {
-      urlFull = this._url;
-    } else if (this._network === 'testnet') {
-      urlFull = this._urlTest;
-    }
+      try {
+          const res = await axios.put(`${urlFull}${url}`, data, config);
 
-    const config: AxiosRequestConfig = {
-      headers: { Authorization: `Bearer ${this._token}` }
-    };
+          if (res.data.error) {
+              console.error(res.data.result);
+              return undefined;
+          }
 
-    try {
-      const res = await axios.put(`${urlFull}${url}`, data, config);
-
-      if (res.data.error) {
-        console.error(res.data.result);
-        return undefined;
+          return res.data;
+      } catch (error) {
+          console.error(error);
+          return undefined;
       }
-
-      return res.data;
-    } catch (error) {
-      console.error(error);
-      return undefined;
-    }
   }
 }

@@ -11,7 +11,7 @@ export class Traces {
   }
 
   async getTrace (trace_id: string): Promise<GetTraceDto | undefined> {
-    const data = await this.tonApi.get('traces', { trace_id })
+    const data = await this.tonApi.get(`traces/${trace_id}`, {})
 
     console.log(data)
     return data

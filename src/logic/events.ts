@@ -10,10 +10,15 @@ export class Events {
     this.tonApi = tonApi;
   }
 
-  async getEvent(event_id: string): Promise<GetEventDto | undefined> {
-    const data = await this.tonApi.get('events', { event_id })
+  async getEvent(event_id: string, accept_language?: string): Promise<GetEventDto | undefined> {
+    const headers: { 'Accept-Language'?: string } = {};
+    if (accept_language !== undefined) {
+      headers['Accept-Language'] = accept_language;
+    }
 
-    console.log(data)
-    return data
+    const res = await this.tonApi.get(`events/${event_id}`, {}, headers)
+
+    console.log(res)
+    return res
   }
 }

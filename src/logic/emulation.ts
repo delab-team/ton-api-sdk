@@ -18,13 +18,14 @@ export class Emulation {
   }
 
   async postEmulateEvents(message: PostMessageType, accept_language?: string): Promise<PostEmulateEventsDto | undefined> {
-    const data: { boc: string; accept_language?: string } = { boc: message.boc };
+    const data: { boc: string; } = { boc: message.boc };
 
+    const headers: { 'Accept-Language'?: string } = {};
     if (accept_language !== undefined) {
-      data.accept_language = accept_language;
+      headers['Accept-Language'] = accept_language;
     }
 
-    const response = await this.tonApi.post('events/emulate', data)
+    const response = await this.tonApi.post('events/emulate', data, headers)
 
     console.log(response)
     return response
@@ -42,13 +43,14 @@ export class Emulation {
     message: PostMessageType,
     accept_language?: string
   ): Promise<PostEmulateWallet | undefined> {
-    const data: { boc: string; accept_language?: string } = { boc: message.boc };
+    const data: { boc: string; } = { boc: message.boc };
   
+    const headers: { 'Accept-Language'?: string } = {};
     if (accept_language !== undefined) {
-      data.accept_language = accept_language;
+      headers['Accept-Language'] = accept_language;
     }
   
-    const response = await this.tonApi.post('wallet/emulate', data);
+    const response = await this.tonApi.post('wallet/emulate', data, headers);
   
     console.log(response);
     return response;
@@ -60,15 +62,17 @@ export class Emulation {
     accept_language?: string
   ): Promise<PostMessageBlockchainDto | undefined> {
   
-    const data: { boc: string; accept_language?: string } = { boc: message.boc, accept_language };
+    const data: { boc: string; } = { boc: message.boc };
     
+    const headers: { 'Accept-Language'?: string } = {};
     if (accept_language !== undefined) {
-      data.accept_language = accept_language;
+      headers['Accept-Language'] = accept_language;
     }
   
     const response = await this.tonApi.post(
       `accounts/${account_id}/events/emulate`,
-      data
+      data,
+      headers
     );
   
     console.log(response);

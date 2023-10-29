@@ -14,7 +14,7 @@ import { GetTonDnsDto } from "../types/accounts/get-ton-dns.dto";
 import { GetTracersAccountDto } from "../types/accounts/get-tracers-account.dto";
 import { GetTransferJettonHistoryDto } from "../types/accounts/get-transfer-jetton-history.dto";
 import { GetTransferJettonsHistoryDto } from "../types/accounts/get-transfer-jettons-history.dto";
-import { PostBulkDto } from "types/accounts/post-bulk-dto";
+import { PostBulkDto } from "../types/accounts/post-bulk-dto";
 
 interface BulkMessageType {
   accounts_ids: string[]
@@ -78,15 +78,10 @@ export class Accounts {
   ): Promise<GetTransferJettonsHistoryDto | undefined> {
     const data: {
       limit: number;
-      accept_language?: string;
       before_it?: number;
       start_date?: number;
       end_date?: number;
     } = { limit };
-  
-    if (accept_language !== undefined) {
-      data.accept_language = accept_language;
-    }
   
     if (before_it !== undefined) {
       data.before_it = before_it;
@@ -99,10 +94,16 @@ export class Accounts {
     if (end_date !== undefined) {
       data.end_date = end_date;
     }
+
+    const headers: { 'Accept-Language'?: string } = {};
+    if (accept_language !== undefined) {
+      headers['Accept-Language'] = accept_language;
+    }
   
     const result = await this.tonApi.get(
       `accounts/${account_id}/jettons/history`,
-      data
+      data,
+      headers
     );
   
     console.log(result);
@@ -120,15 +121,10 @@ export class Accounts {
   ): Promise<GetTransferJettonHistoryDto | undefined> {
     const data: {
       limit: number;
-      accept_language?: string;
       before_it?: number;
       start_date?: number;
       end_date?: number;
     } = { limit };
-  
-    if (accept_language !== undefined) {
-      data.accept_language = accept_language;
-    }
   
     if (before_it !== undefined) {
       data.before_it = before_it;
@@ -141,10 +137,16 @@ export class Accounts {
     if (end_date !== undefined) {
       data.end_date = end_date;
     }
+
+    const headers: { 'Accept-Language'?: string } = {};
+    if (accept_language !== undefined) {
+      headers['Accept-Language'] = accept_language;
+    }
   
     const result = await this.tonApi.get(
       `accounts/${account_id}/jettons/${jetton_id}/history`,
-      data
+      data,
+      headers
     );
   
     console.log(result);
@@ -202,7 +204,6 @@ export class Accounts {
   ): Promise<GetEventsAccountDto | undefined> {
     const data: {
       limit: number;
-      accept_language?: string;
       initiator?: boolean;
       subject_only?: boolean;
       before_lt?: number;
@@ -210,9 +211,11 @@ export class Accounts {
       end_date?: number;
     } = { limit };
   
+    const headers: { 'Accept-Language'?: string } = {};
     if (accept_language !== undefined) {
-      data.accept_language = accept_language;
+      headers['Accept-Language'] = accept_language;
     }
+
   
     if (initiator !== undefined) {
       data.initiator = initiator;
@@ -236,7 +239,8 @@ export class Accounts {
   
     const result = await this.tonApi.get(
       `accounts/${account_id}/events`,
-      data
+      data,
+      headers
     );
   
     console.log(result);
@@ -250,12 +254,12 @@ export class Accounts {
     subject_only?: boolean
   ): Promise<GetEventsAccountByIdDto | undefined> {
     const data: {
-      accept_language?: string;
       subject_only?: boolean;
     } = {};
   
+    const headers: { 'Accept-Language'?: string } = {};
     if (accept_language !== undefined) {
-      data.accept_language = accept_language;
+      headers['Accept-Language'] = accept_language;
     }
   
     if (subject_only !== undefined) {
@@ -264,7 +268,8 @@ export class Accounts {
   
     const result = await this.tonApi.get(
       `accounts/${account_id}/events/${event_id}`,
-      data
+      data,
+      headers
     );
   
     console.log(result);

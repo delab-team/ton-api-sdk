@@ -19,8 +19,13 @@ export class Staking {
     return data
   }
 
-  async getStakingPoolInfo (account_id: string): Promise<GetStakingPoolInfo | undefined> {
-    const data = await this.tonApi.get(`staking/pool/${account_id}`, {})
+  async getStakingPoolInfo (account_id: string, accept_language?: string): Promise<GetStakingPoolInfo | undefined> {
+    const headers: { 'Accept-Language'?: string } = {};
+    if (accept_language !== undefined) {
+      headers['Accept-Language'] = accept_language;
+    }
+
+    const data = await this.tonApi.get(`staking/pool/${account_id}`, {}, headers)
 
     console.log(data)
     return data
@@ -33,11 +38,33 @@ export class Staking {
     return data
   }
 
-  async getAllPoolsAvailable (available_for?: string, include_unverified?: boolean, accept_language?: string): Promise<GetAllPoolsAvailableDto | undefined> {
-    const data = await this.tonApi.get(`staking/pools`, {available_for, include_unverified, Accept_Language: accept_language})
+  async getAllPoolsAvailable(
+    available_for?: string,
+    include_unverified?: boolean,
+    accept_language?: string
+  ): Promise<GetAllPoolsAvailableDto | undefined> {
+    const data: { available_for?: string; include_unverified?: boolean } = {};
 
-    console.log(data)
-
-    return data
+    const headers: { 'Accept-Language'?: string } = {};
+    if (accept_language !== undefined) {
+      headers['Accept-Language'] = accept_language;
+    }
+  
+    if (available_for !== undefined) {
+      data.available_for = available_for;
+    }
+  
+    if (include_unverified !== undefined) {
+      data.include_unverified = include_unverified;
+    }
+  
+    const result = await this.tonApi.get(
+      `staking/pools`,
+      data,
+      headers
+    );
+  
+    console.log(result);
+    return result;
   }
 }

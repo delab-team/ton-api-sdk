@@ -11,17 +11,36 @@ export class Rates {
     this.tonApi = tonApi;
   }
 
-  async getTokenPrice(token: string, currencies: string | string[]): Promise<GetTokenPriceDto | undefined> {
-    const data = await this.tonApi.get('rates', { token, currencies })
+  async getTokenPrice(tokens: string, currencies: string | string[]): Promise<GetTokenPriceDto | undefined> {
+    const data = await this.tonApi.get('rates', { tokens, currencies })
 
     console.log(data)
     return data
   }
 
-  async getChartToken(token: string): Promise<GetChartTokenDto | undefined> {
-    const data = await this.tonApi.get('rates/chart', { token })
-
-    console.log(data)
-    return data
+  async getChartToken(
+    token: string,
+    currency?: string,
+    start_date?: number,
+    end_date?: number
+  ): Promise<GetChartTokenDto | undefined> {
+    const data: { token: string; currency?: string; start_date?: number; end_date?: number } = { token };
+  
+    if (currency !== undefined) {
+      data.currency = currency;
+    }
+  
+    if (start_date !== undefined) {
+      data.start_date = start_date;
+    }
+  
+    if (end_date !== undefined) {
+      data.end_date = end_date;
+    }
+  
+    const result = await this.tonApi.get('rates/chart', data);
+  
+    console.log(result);
+    return result;
   }
 }

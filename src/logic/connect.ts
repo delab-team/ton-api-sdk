@@ -1,6 +1,11 @@
 import { TonApi } from "./ton-api"
 
 import { GetPayloadDto } from "../types/connect/get-payload.dto";
+import { PostStateInitDto } from "../types/connect/post-state-init.dto";
+
+interface PostMessageType {
+  state_init: string
+}
 
 export class Connect {
 
@@ -15,5 +20,12 @@ export class Connect {
 
     console.log(data)
     return data
+  }
+
+  async postStateInit(message: PostMessageType): Promise<PostStateInitDto | undefined> {
+    const res = await this.tonApi.post('tonconnect/stateinit', message)
+
+    console.log(res)
+    return res
   }
 }

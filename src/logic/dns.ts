@@ -34,7 +34,7 @@ export class DNS {
     return data
   }
 
-  async getAllAuctions (tld: string): Promise<GetAllAuctionsDto | undefined> {
+  async getAllAuctions (tld?: string): Promise<GetAllAuctionsDto | undefined> {
     const data = await this.tonApi.get(`dns/auctions`, { tld })
 
     console.log(data)
