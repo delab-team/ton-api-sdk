@@ -1,7 +1,7 @@
 {
-  "name": "@delab-team/ton-network-react",
+  "name": "@delab-team/ton-api-sdk",
   "version": "0.0.1",
-  "description": "NetworkProvider for Contracts",
+  "description": "Ton-Api-SDK is a library for interacting with the Ton blockchain API.",
   "repository": "https://github.com/delab-team/ton-api-sdk",
   "homepage": "https://github.com/delab-team/ton-api-sdk",
   "main": "./dist/index.js",
@@ -21,9 +21,6 @@
     "build": "npx tsc && yarn webpack --mode production"
   },
   "dependencies": {
-    "@orbs-network/ton-access": "^2.3.3",
-    "@ton/core": "^0.52.2",
-    "@tonconnect/ui": "^2.0.0-beta.2",
     "@types/react": "^18.2.21",
     "copy-webpack-plugin": "^11.0.0",
     "react-dom": "^18.2.0",
