@@ -13,6 +13,7 @@ import { Rates } from './rates';
 import { Connect } from './connect';
 import { Wallet } from './wallet';
 import { Events } from "./events";
+import { Jettons } from "./jettons";
 
 export class TonApi {
   private _url: string = 'https://tonapi.io/v2/'
@@ -34,6 +35,7 @@ export class TonApi {
   public Wallet: Wallet
   public LiteServer: LiteServer
   public Events: Events
+  public Jettons: Jettons
 
   constructor (token: string, network: 'testnet' | 'mainnet') {
     this._network = network
@@ -53,6 +55,7 @@ export class TonApi {
     this.Wallet = new Wallet(this)
     this.LiteServer = new LiteServer(this)
     this.Events = new Events(this)
+    this.Jettons = new Jettons(this)
   }
 
   private _token: string = 'AFXRKLZM2YCJ67AAAAAE4XDRSACSYEOYKQKOSUVUKMXNMP2AKUTWJ2UVBPTTQZWRGZMLALY'
