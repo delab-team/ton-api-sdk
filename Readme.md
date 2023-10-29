@@ -20,6 +20,8 @@
   Ton-Api-SDK is a library for interacting with the Ton blockchain API. It provides a set of tools and features to help developers build applications and services that utilize the Ton blockchain efficiently.
 </p>
 
+## API Doc: <a href="https://docs.tonconsole.com/tonapi/api-v2">TON Api</a>
+
 ## Install
 
 -   **as local project package**
