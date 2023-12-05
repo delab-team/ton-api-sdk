@@ -1,3 +1,5 @@
+import { Address, Cell } from "@ton/core"
+
 // GetLastMasterchainDto
 
 export interface GetLastMasterchainDto {
@@ -23,8 +25,8 @@ export interface GetLastMasterchainDto {
   prev_key_block_seqno: number;
   gen_software_version?: number;
   gen_software_capabilities?: BigInt;
-  master_ref?: string;
-  prev_refs: string[];
+  master_ref?: Cell;
+  prev_refs: Cell[];
   in_msg_descr_length: BigInt;
   out_msg_descr_length: BigInt;
   rand_seed: string;

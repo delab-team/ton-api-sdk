@@ -5,8 +5,8 @@ export interface GetBlockDataDto {
   workchain_id: number;
   shard: BigInt;
   seqno: number;
-  root_hash: Cell;
-  file_hash: Cell;
+  root_hash: string;
+  file_hash: string;
   global_id: number;
   version: number;
   after_merge: boolean;
@@ -24,10 +24,10 @@ export interface GetBlockDataDto {
   prev_key_block_seqno: number;
   gen_software_version?: number;
   gen_software_capabilities?: BigInt;
-  master_ref?: Address;
-  prev_refs: Address[];
+  master_ref?: Cell;
+  prev_refs: Cell[];
   in_msg_descr_length: BigInt;
   out_msg_descr_length: BigInt;
-  rand_seed: Cell;
-  created_by: Cell;
+  rand_seed: string;
+  created_by: string;
 };
