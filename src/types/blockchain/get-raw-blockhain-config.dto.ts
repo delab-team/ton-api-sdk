@@ -1,5 +1,5 @@
-// GetRawBlockchainConfigType 
 
-export interface GetRawBlockchainConfigType {
-  config: Record<string, any>;
+
+export interface GetRawBlockchainConfigDto {
+  config: any
 }

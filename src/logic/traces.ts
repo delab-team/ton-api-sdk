@@ -1,6 +1,6 @@
 import { TonApi } from "./ton-api";
 
-import { GetTraceDto } from "../types/traces/get-trace.dto";
+import { Trace } from "../types/common";
 
 export class Traces {
 
@@ -10,7 +10,7 @@ export class Traces {
     this.tonApi = tonApi;
   }
 
-  async getTrace (trace_id: string): Promise<GetTraceDto | undefined> {
+  async getTrace (trace_id: string): Promise<Trace | undefined> {
     const data = await this.tonApi.get(`traces/${trace_id}`, {})
 
     console.log(data)

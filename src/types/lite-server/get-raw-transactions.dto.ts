@@ -4,9 +4,9 @@ export interface GetRawTransactionsDto {
 }
 
 export interface Id {
-  workchain: number
-  shard: number
-  seqno: number
+  workchain: bigint
+  shard: bigint
+  seqno: bigint
   root_hash: string
   file_hash: string
 }

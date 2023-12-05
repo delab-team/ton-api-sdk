@@ -1,12 +1,14 @@
+import { Address } from "@ton/core"
+
 export interface GetStorageProvidersDto {
-  providers: Provider[]
+  providers: StorageProvider[]
 }
 
-export interface Provider {
-  address: string
+export interface StorageProvider {
+  address: Address
   accept_new_contracts: boolean
-  rate_per_mb_day: number
-  max_span: number
-  minimal_file_size: number
-  maximal_file_size: number
+  rate_per_mb_day: bigint
+  max_span: bigint
+  minimal_file_size: bigint
+  maximal_file_size: bigint
 }

@@ -21,13 +21,14 @@
     "build": "npx tsc && yarn webpack --mode production"
   },
   "dependencies": {
+    "@ton/core": "^0.53.0",
     "@types/react": "^18.2.21",
     "copy-webpack-plugin": "^11.0.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "stream-browserify": "^3.0.0",
     "ton": "^13.6.1",
-    "ton-core": "^0.52.0",
+    "ton-core": "^0.53.0",
     "ton-crypto": "^3.2.0"
   },
   "private": false,

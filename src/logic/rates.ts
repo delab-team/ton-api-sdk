@@ -3,6 +3,7 @@ import { TonApi } from "./ton-api"
 import { GetChartTokenDto } from "../types/rates/get-chart-token.dto";
 import { GetTokenPriceDto } from "../types/rates/get-token-price.dto";
 
+
 export class Rates {
 
   private tonApi: TonApi
@@ -11,7 +12,7 @@ export class Rates {
     this.tonApi = tonApi;
   }
 
-  async getTokenPrice(tokens: string, currencies: string | string[]): Promise<GetTokenPriceDto | undefined> {
+  async getTokenPrice(tokens: string, currencies: string): Promise<GetTokenPriceDto | undefined> {
     const data = await this.tonApi.get('rates', { tokens, currencies })
 
     console.log(data)

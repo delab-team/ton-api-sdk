@@ -73,11 +73,17 @@ export class LiteServer {
     return res
   }
 
-  async getAccountState(account_id: string): Promise<GetAccountStateDto | undefined> {
-    const data = await this.tonApi.get(`liteserver/get_account_state/${account_id}`, {})
+  async getAccountState(account_id: string, target_block?: string): Promise<GetAccountStateDto | undefined> {
+    const data: { target_block?: string } = {}
 
-    console.log(data)
-    return data
+    if (target_block !== undefined) {
+      data.target_block = target_block
+    }
+    
+    const res = await this.tonApi.get(`liteserver/get_account_state/${account_id}`, data)
+
+    console.log(res)
+    return res
   }
 
   async getShardInfo (block_id: string, workchain: number, shard: number, exact: boolean): Promise<GetShardInfoDto | undefined> {

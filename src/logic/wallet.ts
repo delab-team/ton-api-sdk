@@ -1,9 +1,9 @@
 import { TonApi } from "./ton-api"
 
-import { GetAccountSeqnoDto } from "../types/wallet/get-account-seqno.dto";
 import { GetBackupDto } from "../types/wallet/get-backup.dto";
-import { GetWalletsDto } from "../types/wallet/get-wallets.dto";
 import { PostAuthProofDto, PostMessageType } from "../types/wallet/post-auth-proof.dto";
+
+import { Accounts, Seqno } from "../types/common";
 
 export class Wallet {
 
@@ -45,14 +45,14 @@ export class Wallet {
     return res
   }
 
-  async getWallets(public_key: string): Promise<GetWalletsDto | undefined> {
+  async getWallets(public_key: string): Promise<Accounts | undefined> {
     const data = await this.tonApi.get(`pubkeys/${public_key}/wallets`, {})
 
     console.log(data)
     return data
   }
 
-  async getAccountSeqno(account_id: string): Promise<GetAccountSeqnoDto | undefined> {
+  async getAccountSeqno(account_id: string): Promise<Seqno | undefined> {
     const data = await this.tonApi.get(`wallet/${account_id}/seqno`, {})
 
     console.log(data)

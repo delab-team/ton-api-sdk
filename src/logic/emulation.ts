@@ -1,9 +1,12 @@
+import { Address } from "@ton/core";
+
 import { TonApi } from "./ton-api";
 
 import { PostEmulateEventsDto } from "../types/emulation/post-emulate-events.dto";
 import { PostEmulateTracesDto } from "../types/emulation/post-emulate-traces.dto";
-import { PostEmulateWallet } from "../types/emulation/post-emulate-wallet.dto";
-import { PostMessageBlockchainDto } from "../types/emulation/post-message-blockchain.dto";
+import { PostEmulateWalletDto } from "../types/emulation/post-emulate-wallet.dto";
+
+import { AccountEvent } from "../types/common";
 
 interface PostMessageType {
   boc: string
@@ -42,7 +45,7 @@ export class Emulation {
   async postEmulateWallet(
     message: PostMessageType,
     accept_language?: string
-  ): Promise<PostEmulateWallet | undefined> {
+  ): Promise<PostEmulateWalletDto | undefined> {
     const data: { boc: string; } = { boc: message.boc };
   
     const headers: { 'Accept-Language'?: string } = {};
@@ -57,10 +60,10 @@ export class Emulation {
   }  
 
   async postMessageBlockchain(
-    account_id: string,
+    account_id: Address,
     message: PostMessageType,
     accept_language?: string
-  ): Promise<PostMessageBlockchainDto | undefined> {
+  ): Promise<AccountEvent | undefined> {
   
     const data: { boc: string; } = { boc: message.boc };
     

@@ -1,18 +1,19 @@
 import { TonApi } from "./ton-api"
 
 import { GetAccountInfoType } from "../types/blockchain/get-account-info.dto";
-import { GetAccountTransactionsType } from "../types/blockchain/get-account-transactions.dto";
+import { GetAccountTransactionsDto } from "../types/blockchain/get-account-transactions.dto";
 import { GetBlockDataDto } from "../types/blockchain/get-block-data.dto";
-import { GetLastMasterchainType } from "../types/blockchain/get-last-masterchain.dto";
-import { GetMethodAccountType } from "../types/blockchain/get-method-account.dto";
-import { GetRawType } from "../types/blockchain/get-raw-config.dto";
-import { GetTransactionsType } from "../types/blockchain/get-transactions.dto";
-import { GetTransactionsDataType } from "../types/blockchain/get-transactions-data.dto";
-import { GetTransactionsMessageDataType } from "../types/blockchain/get-transactions-message-data.dto";
-import { GetValidatorsType } from "../types/blockchain/get-validators.dto";
-import { GetBlockchainConfigType } from "../types/blockchain/get-blockchain-config.dto";
-import { GetRawBlockchainConfigType } from "../types/blockchain/get-raw-blockhain-config.dto";
-import { GetAccountInspectType } from "../types/blockchain/get-account-inspect.dto";
+import { GetLastMasterchainDto } from "../types/blockchain/get-last-masterchain.dto";
+import { GetMethodAccountDto } from "../types/blockchain/get-method-account.dto";
+import { GetRawDto } from "../types/blockchain/get-raw-config.dto";
+import { GetTransactionsDto } from "../types/blockchain/get-transactions.dto";
+import { GetTransactionsDataDto } from "../types/blockchain/get-transactions-data.dto";
+import { GetTransactionsMessageDataDto } from "../types/blockchain/get-transactions-message-data.dto";
+import { GetValidatorsDto } from "../types/blockchain/get-validators.dto";
+import { GetBlockchainConfigDto } from "../types/blockchain/get-blockchain-config.dto";
+import { GetRawBlockchainConfigDto } from "../types/blockchain/get-raw-blockhain-config.dto";
+import { GetAccountInspectDto } from "../types/blockchain/get-account-inspect.dto";
+import { GetBlockShardsDto } from "../types/blockchain/get-block-shards.dto";
 
 interface PostMessageType {
   boc: string;
@@ -34,42 +35,49 @@ export class Blockchain {
     return data
   }
 
-  async getTransactions (block_id: string): Promise<GetTransactionsType | undefined> {
+  async getBlockShards (masterchain_seqno: number): Promise<GetBlockShardsDto | undefined> {
+    const data = await this.tonApi.get(`blockchain/masterchain/${masterchain_seqno}/shards`, {})
+
+    console.log(data)
+    return data
+  }
+
+  async getTransactions (block_id: string): Promise<GetTransactionsDto | undefined> {
     const data = await this.tonApi.get(`blockchain/blocks/${block_id}/transactions`, {})
 
     console.log(data)
     return data
   }
 
-  async getRawConfig (block_id: string): Promise<GetRawType | undefined> {
+  async getRawConfig (block_id: string): Promise<GetRawDto | undefined> {
     const data = await this.tonApi.get(`blockchain/blocks/${block_id}/config/raw`, {});
   
     console.log(data);
     return data;
   }
 
-  async getTransactionsData (transaction_id: string): Promise<GetTransactionsDataType | undefined> {
+  async getTransactionsData (transaction_id: string): Promise<GetTransactionsDataDto | undefined> {
     const data = await this.tonApi.get(`blockchain/transactions/${transaction_id}`, {})
 
     console.log(data)
     return data
   }
 
-  async getTransactionDataMessage (msg_id: string): Promise<GetTransactionsMessageDataType | undefined> {
+  async getTransactionDataMessage (msg_id: string): Promise<GetTransactionsMessageDataDto | undefined> {
     const data = await this.tonApi.get(`blockchain/messages/${msg_id}/transaction`, {})
 
     console.log(data)
     return data
   }
 
-  async getValidators (): Promise<GetValidatorsType | undefined> {
+  async getValidators (): Promise<GetValidatorsDto | undefined> {
     const data = await this.tonApi.get('blockchain/validators', {})
 
     console.log(data)
     return data
   }
 
-  async getLastMasterchain (): Promise<GetLastMasterchainType | undefined> {
+  async getLastMasterchain (): Promise<GetLastMasterchainDto | undefined> {
     const data = await this.tonApi.get('blockchain/masterchain-head', {})
 
     console.log(data)
@@ -85,11 +93,11 @@ export class Blockchain {
 
   async getAccountTransactions(
     account_id: string,
-    after_lt: number,
-    before_lt?: number,
+    after_lt: BigInt,
+    before_lt?: BigInt,
     limit?: number
-  ): Promise<GetAccountTransactionsType | undefined> {
-    const data: { [key: string]: number | undefined } = {};
+  ): Promise<GetAccountTransactionsDto | undefined> {
+    const data: { [key: string]: BigInt | number | undefined } = {};
   
     if (before_lt !== undefined) {
       data['before_lt'] = before_lt;
@@ -113,9 +121,9 @@ export class Blockchain {
   async getMethodAccount(
     account_id: string,
     method_name: string,
-    args?: string | string[]
-  ): Promise<GetMethodAccountType | undefined> {
-    const data: { args?: string | string[] } = {};
+    args?: string[]
+  ): Promise<GetMethodAccountDto | undefined> {
+    const data: { args?: string[] } = {};
   
     if (args !== undefined) {
       data.args = args;
@@ -136,21 +144,21 @@ export class Blockchain {
     return response
   }
 
-  async getBlockchainConfig (): Promise<GetBlockchainConfigType | undefined> {
+  async getBlockchainConfig (): Promise<GetBlockchainConfigDto | undefined> {
     const data = await this.tonApi.get(`blockchain/config`, {})
 
     console.log(data)
     return data
   }
 
-  async getRawBlockchainConfig (): Promise<GetRawBlockchainConfigType | undefined> {
+  async getRawBlockchainConfig (): Promise<GetRawBlockchainConfigDto | undefined> {
     const data = await this.tonApi.get(`blockchain/config/raw`, {})
 
     console.log(data)
     return data
   }
 
-  async getAccountInspect (account_id: string): Promise<GetAccountInspectType | undefined> {
+  async getAccountInspect (account_id: string): Promise<GetAccountInspectDto | undefined> {
     const data = await this.tonApi.get(`blockchain/accounts/${account_id}/inspect`, {})
 
     console.log(data)

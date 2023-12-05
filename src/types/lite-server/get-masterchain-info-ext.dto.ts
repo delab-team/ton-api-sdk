@@ -1,24 +1,24 @@
 export interface GetMasterchainInfoExtDto {
-  mode: number
-  version: number
-  capabilities: number
-  last: Last
-  last_utime: number
-  now: number
-  state_root_hash: string
+  capabilities: number;
   init: Init
+  last: Last
+  last_utime: bigint
+  mode: number
+  now: bigint
+  state_root_hash: string
+  version: number
 }
 
-export interface Last {
-  workchain: number
-  shard: number
-  seqno: number
-  root_hash: string
-  file_hash: string
+interface Init {
+  file_hash: string;
+  root_hash: string;
+  workchain: bigint;
 }
 
-export interface Init {
-  workchain: number
-  root_hash: string
+interface Last {
   file_hash: string
+  root_hash: string
+  seqno: bigint
+  shard: bigint
+  workchain: bigint
 }

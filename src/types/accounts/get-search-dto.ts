@@ -1,9 +1,10 @@
-export interface GetSearchDto {
-  addresses: Address[]
-}
+import { Address } from '@ton/core'
 
-export interface Address {
-  address: string
-  name: string
-  preview: string
+// FoundAccounts
+export interface GetSearchDto {
+  addresses: {
+    address: Address
+    name: string
+    preview: string
+  }[]
 }

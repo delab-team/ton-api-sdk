@@ -1,6 +1,6 @@
 import { TonApi } from "./ton-api"
 
-import { GetEventDto } from "../types/events/get-event.dto";
+import { Event } from '../types/common'
 
 export class Events {
   
@@ -10,7 +10,7 @@ export class Events {
     this.tonApi = tonApi;
   }
 
-  async getEvent(event_id: string, accept_language?: string): Promise<GetEventDto | undefined> {
+  async getEvent(event_id: string, accept_language?: string): Promise<Event | undefined> {
     const headers: { 'Accept-Language'?: string } = {};
     if (accept_language !== undefined) {
       headers['Accept-Language'] = accept_language;

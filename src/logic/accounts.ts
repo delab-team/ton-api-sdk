@@ -1,3 +1,4 @@
+import { Address } from '@ton/core'
 import { TonApi } from "./ton-api";
 
 import { GetAccountsBalanceChangeDto } from "../types/accounts/get-accounts-balance-change.dto";
@@ -13,8 +14,10 @@ import { GetSearchDto } from "../types/accounts/get-search-dto";
 import { GetTonDnsDto } from "../types/accounts/get-ton-dns.dto";
 import { GetTracersAccountDto } from "../types/accounts/get-tracers-account.dto";
 import { GetTransferJettonHistoryDto } from "../types/accounts/get-transfer-jetton-history.dto";
-import { GetTransferJettonsHistoryDto } from "../types/accounts/get-transfer-jettons-history.dto";
 import { PostBulkDto } from "../types/accounts/post-bulk-dto";
+import { GetParseAddressDto } from "../types/accounts/get-parse-address.dto";
+
+import { AccountEvents } from '../types/common';
 
 interface BulkMessageType {
   accounts_ids: string[]
@@ -28,6 +31,13 @@ export class Accounts {
     this.tonApi = tonApi
   }
 
+  async getParseAddress (account_id: Address): Promise<GetParseAddressDto | undefined> {
+    const data = await this.tonApi.get(`address/${account_id}/parse`, {})
+
+    console.log(data)
+    return data
+  }
+
   async postBulk (message: BulkMessageType): Promise<PostBulkDto | undefined> {
     const data = await this.tonApi.post('accounts/_bulk', message)
 
@@ -35,14 +45,14 @@ export class Accounts {
     return data
   }
 
-  async getHumanFriendlyInfo (account_id: string): Promise<GetHumanFriendlyInfoDto | undefined> {
+  async getHumanFriendlyInfo (account_id: Address): Promise<GetHumanFriendlyInfoDto | undefined> {
     const data = await this.tonApi.get(`accounts/${account_id}`, {})
 
     console.log(data)
     return data
   }
 
-  async getAccountsDomains (account_id: string): Promise<GetAccountsDomainsDto | undefined> {
+  async getAccountsDomains (account_id: Address): Promise<GetAccountsDomainsDto | undefined> {
     const data = await this.tonApi.get(`accounts/${account_id}/dns/backresolve`, {})
 
     console.log(data)
@@ -50,7 +60,7 @@ export class Accounts {
   }
 
   async getAllJettonsBalances(
-    account_id: string,
+    account_id: Address,
     currencies?: string
   ): Promise<GetAllJettonsBalancesDto | undefined> {
     const data: { currencies?: string } = {};
@@ -69,18 +79,18 @@ export class Accounts {
   }
 
   async getTransferJettonsHistory(
-    account_id: string,
+    account_id: Address,
     limit: number,
     accept_language?: string,
-    before_it?: number,
-    start_date?: number,
-    end_date?: number
-  ): Promise<GetTransferJettonsHistoryDto | undefined> {
+    before_it?: BigInt,
+    start_date?: BigInt,
+    end_date?: BigInt
+  ): Promise<AccountEvents | undefined> {
     const data: {
       limit: number;
-      before_it?: number;
-      start_date?: number;
-      end_date?: number;
+      before_it?: BigInt;
+      start_date?: BigInt;
+      end_date?: BigInt;
     } = { limit };
   
     if (before_it !== undefined) {
@@ -111,19 +121,19 @@ export class Accounts {
   }
 
   async getTransferJettonHistory(
-    account_id: string,
-    jetton_id: string,
+    account_id: Address,
+    jetton_id: Address,
     limit: number,
     accept_language?: string,
-    before_it?: number,
-    start_date?: number,
-    end_date?: number
+    before_it?: bigint,
+    start_date?: bigint,
+    end_date?: bigint
   ): Promise<GetTransferJettonHistoryDto | undefined> {
     const data: {
       limit: number;
-      before_it?: number;
-      start_date?: number;
-      end_date?: number;
+      before_it?: bigint;
+      start_date?: bigint;
+      end_date?: bigint;
     } = { limit };
   
     if (before_it !== undefined) {
@@ -154,14 +164,14 @@ export class Accounts {
   }
 
   async getAllNftItems(
-    account_id: string,
-    collection?: string,
+    account_id: Address,
+    collection?: Address,
     limit?: number,
     offset?: number,
     indirect_ownership?: boolean
   ): Promise<GetAllNftItemsDto | undefined> {
     const data: {
-      collection?: string;
+      collection?: Address;
       limit?: number;
       offset?: number;
       indirect_ownership?: boolean;
@@ -193,22 +203,22 @@ export class Accounts {
   }
 
   async getEventsAccount(
-    account_id: string,
+    account_id: Address,
     limit: number,
     accept_language?: string,
     initiator?: boolean,
     subject_only?: boolean,
-    before_lt?: number,
-    start_date?: number,
-    end_date?: number
+    before_lt?: bigint,
+    start_date?: bigint,
+    end_date?: bigint
   ): Promise<GetEventsAccountDto | undefined> {
     const data: {
       limit: number;
       initiator?: boolean;
       subject_only?: boolean;
-      before_lt?: number;
-      start_date?: number;
-      end_date?: number;
+      before_lt?: bigint;
+      start_date?: bigint;
+      end_date?: bigint;
     } = { limit };
   
     const headers: { 'Accept-Language'?: string } = {};
@@ -248,7 +258,7 @@ export class Accounts {
   }
 
   async getEventsAccountById(
-    account_id: string,
+    account_id: Address,
     event_id: string,
     accept_language?: string,
     subject_only?: boolean
@@ -277,7 +287,7 @@ export class Accounts {
   }
 
   async getTracesAccount(
-    account_id: string,
+    account_id: Address,
     limit?: number
   ): Promise<GetTracersAccountDto | undefined> {
     const data: { limit?: number } = {};
@@ -295,14 +305,14 @@ export class Accounts {
     return result;
   }
 
-  async getAllSubscriptions (account_id: string): Promise<GetAllSubscriptionsDto | undefined> {
+  async getAllSubscriptions (account_id: Address): Promise<GetAllSubscriptionsDto | undefined> {
     const data = await this.tonApi.get(`accounts/${account_id}/subscriptions`, {})
     
     console.log(data)
     return data
   }
 
-  async postUpdateInternalCache (account_id: string): Promise<any | string> {
+  async postUpdateInternalCache (account_id: Address): Promise<any | string> {
     const res = await this.tonApi.post(`accounts/${account_id}/reindex`, {})
 
     console.log(res)
@@ -317,7 +327,7 @@ export class Accounts {
   }
 
   async getTonDns(
-    account_id: string,
+    account_id: Address,
     period?: number
   ): Promise<GetTonDnsDto | undefined> {
     const data: { period?: number } = {};
@@ -335,14 +345,14 @@ export class Accounts {
     return result;
   }
   
-  async getPublicKey (account_id: string): Promise<GetPublicKeyDto | undefined> {
+  async getPublicKey (account_id: Address): Promise<GetPublicKeyDto | undefined> {
     const data = await this.tonApi.get(`accounts/${account_id}/publickey`, {})
 
     console.log(data)
     return data
   }
 
-  async getAccountsBalanceChange (account_id: string, start_date: number, end_date: number): Promise<GetAccountsBalanceChangeDto | undefined> {
+  async getAccountsBalanceChange (account_id: Address, start_date: bigint, end_date: bigint): Promise<GetAccountsBalanceChangeDto | undefined> {
     const data = await this.tonApi.get(`accounts/${account_id}/diff`, { start_date, end_date })
 
     console.log(data)

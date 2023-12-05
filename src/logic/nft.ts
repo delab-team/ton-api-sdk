@@ -1,11 +1,6 @@
 import { TonApi } from "./ton-api";
 
-import { GetNftCollectionsByAddressDto } from "../types/nft/get-nft-collections-by-address.dto";
-import { GetNftCollectionsDto } from "../types/nft/get-nft-collections.dto";
-import { GetNftItemByAddressDto } from "../types/nft/get-nft-item-by-address.dto";
-import { GetNftItemsFromCollection } from "../types/nft/get-nft-items-from-collection.dto";
-import { GetNftTransferHistoryDto } from "../types/nft/get-nft-transfer-history.dto";
-import { TransferNftHistoryDto } from "../types/nft/get-transfer-nft-history.dto";
+import { AccountEvents, NftCollection, NftCollections, NftItem, NftItems } from "../types/common";
 
 interface PostMessageType {
   account_ids: string[]
@@ -26,7 +21,7 @@ export class NFT {
     start_date?: number,
     end_date?: number,
     accept_language?: string
-  ): Promise<TransferNftHistoryDto | undefined> {
+  ): Promise<AccountEvents | undefined> {
     const data: {
       limit: number;
       before_lt?: number;
@@ -64,7 +59,7 @@ export class NFT {
   async getNftCollections(
     limit?: number,
     offset?: number
-  ): Promise<GetNftCollectionsDto | undefined> {
+  ): Promise<NftCollections | undefined> {
     const data: { limit?: number; offset?: number } = {};
   
     if (limit !== undefined) {
@@ -84,7 +79,7 @@ export class NFT {
     return result;
   }
 
-  async getNftCollectionsByAddress (account_id: string): Promise<GetNftCollectionsByAddressDto | undefined> {
+  async getNftCollectionsByAddress (account_id: string): Promise<NftCollection | undefined> {
     const data = await this.tonApi.get(`nfts/collections/${account_id}`, {})
 
     console.log(data)
@@ -95,7 +90,7 @@ export class NFT {
     account_id: string,
     limit?: number,
     offset?: number
-  ): Promise<GetNftItemsFromCollection | undefined> {
+  ): Promise<NftItems | undefined> {
     const data: { limit?: number; offset?: number } = {};
   
     if (limit !== undefined) {
@@ -122,14 +117,14 @@ export class NFT {
     return data
   }
   
-  async getNftItemByAddress (account_id: string): Promise<GetNftItemByAddressDto | undefined> {
+  async getNftItemByAddress (account_id: string): Promise<NftItem | undefined> {
     const data = await this.tonApi.get(`nfts/${account_id}`, {})
 
     console.log(data)
     return data
   }
 
-  async getNftTransferHistory (account_id: string, limit: number, before_lt?: number, start_date?: number, end_date?: number, accept_language?: string): Promise<GetNftTransferHistoryDto | undefined> {
+  async getNftTransferHistory (account_id: string, limit: number, before_lt?: number, start_date?: number, end_date?: number, accept_language?: string): Promise<AccountEvents | undefined> {
    
     const data: {
      limit: number,

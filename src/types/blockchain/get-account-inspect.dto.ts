@@ -1,11 +1,8 @@
-export interface GetAccountInspectType {
-  code: string
-  code_hash: string
-  methods: Method[]
-  compiler: string
-}
+import { Method } from "../common";
 
-export interface Method {
-  id: number
-  method: string
+export interface GetAccountInspectDto {
+  code: string;
+  code_hash: string;
+  methods: Method[];
+  compiler: string;
 }

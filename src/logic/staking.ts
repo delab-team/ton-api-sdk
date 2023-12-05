@@ -1,9 +1,6 @@
 import { TonApi } from "./ton-api";
 
-import { GetAllPoolsAvailableDto } from "../types/staking/get-all-pools-available.dto";
-import { GetAllPoolsDto } from "../types/staking/get-all-pools.dto";
-import { GetPoolHistoryDto } from "../types/staking/get-pool-history.dto";
-import { GetStakingPoolInfo } from "../types/staking/get-staking-pool.dto";
+import { AccountStaking, ApyHistory, StakingInfo } from "../types/common";
 
 export class Staking {
   private tonApi: TonApi
@@ -12,14 +9,14 @@ export class Staking {
     this.tonApi = tonApi;
   }
 
-  async getAllPools (account_id: string): Promise<GetAllPoolsDto | undefined> {
+  async getAllPools (account_id: string): Promise<AccountStaking | undefined> {
     const data = await this.tonApi.get(`staking/nominator/${account_id}/pools`, {})
 
     console.log(data)
     return data
   }
 
-  async getStakingPoolInfo (account_id: string, accept_language?: string): Promise<GetStakingPoolInfo | undefined> {
+  async getStakingPoolInfo (account_id: string, accept_language?: string): Promise<StakingInfo | undefined> {
     const headers: { 'Accept-Language'?: string } = {};
     if (accept_language !== undefined) {
       headers['Accept-Language'] = accept_language;
@@ -31,7 +28,7 @@ export class Staking {
     return data
   } 
 
-  async getPoolHistory (account_id: string): Promise<GetPoolHistoryDto | undefined> {
+  async getPoolHistory (account_id: string): Promise<ApyHistory | undefined> {
     const data = await this.tonApi.get(`staking/pool/${account_id}/history`, {})
 
     console.log(data)
@@ -42,7 +39,7 @@ export class Staking {
     available_for?: string,
     include_unverified?: boolean,
     accept_language?: string
-  ): Promise<GetAllPoolsAvailableDto | undefined> {
+  ): Promise<AccountStaking | undefined> {
     const data: { available_for?: string; include_unverified?: boolean } = {};
 
     const headers: { 'Accept-Language'?: string } = {};

@@ -1,8 +1,6 @@
-export interface GetTracersAccountDto {
-  traces: Trace[]
-}
+import { TraceID } from "../common";
 
-export interface Trace {
-  id: string
-  utime: number
+// TraceIDs Schema
+export interface GetTracersAccountDto {
+  traces: TraceID[]
 }

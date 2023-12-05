@@ -1,5 +1,4 @@
-// GetRawConfigType 
-
-export interface GetRawType {
-  config: Record<string, any>;
+// RawBlockchainConfig Schema
+export interface GetRawDto {
+  [key: string]: any;
 }

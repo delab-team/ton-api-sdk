@@ -1,4 +1,3 @@
-import { LiteServer } from "./lite-server";
 import axios, { AxiosRequestConfig } from 'axios';
 
 import { Blockchain } from './blockchain';
@@ -14,6 +13,7 @@ import { Connect } from './connect';
 import { Wallet } from './wallet';
 import { Events } from "./events";
 import { Jettons } from "./jettons";
+import { LiteServer } from "./lite-server";
 
 export class TonApi {
   private _url: string = 'https://tonapi.io/v2/'

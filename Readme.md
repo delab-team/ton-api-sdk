@@ -115,6 +115,10 @@ yarn add @delab-team/ton-api-sdk
 
 ## Accounts
 
+- `path`: /v2/address/{account_id}/parse
+- `method_name`: getParseAddress
+- `description`: parse address and display in all formats
+=
 - `path`: /v2/accounts/_bulk
 - `method_name`: postBulk
 - `description`: Get human-friendly information about several accounts without low-level details. <br />

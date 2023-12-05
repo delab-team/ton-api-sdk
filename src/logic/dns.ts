@@ -1,9 +1,6 @@
 import { TonApi } from "./ton-api";
 
-import { GetAllAuctionsDto } from "../types/dns/get-all-auctions.dto";
-import { GetDnsResolveForNameDto } from "../types/dns/get-dns-resolve-for-name.dto";
-import { GetDomainBidsDto } from "../types/dns/get-domain-bids-dto";
-import { GetFullInfoDto } from "../types/dns/get-full-info.dto";
+import { Auctions, DnsRecord, DomainBids, DomainInfo } from "../types/common";
 
 export class DNS {
 
@@ -13,28 +10,28 @@ export class DNS {
     this.tonApi = tonApi;
   }
 
-  async getFullInfo(domain_name: string): Promise<GetFullInfoDto | undefined> {
+  async getFullInfo(domain_name: string): Promise<DomainInfo | undefined> {
     const data = await this.tonApi.get(`dns/${domain_name}`, {})
 
     console.log(data)
     return data
   }
 
-  async getDnsResolveForName (domain_name: string): Promise<GetDnsResolveForNameDto | undefined> {
+  async getDnsResolveForName (domain_name: string): Promise<DnsRecord | undefined> {
     const data = await this.tonApi.get(`dns/${domain_name}/resolve`, {})
 
     console.log(data)
     return data
   }
 
-  async getDomainBids (domain_name: string): Promise<GetDomainBidsDto | undefined> {
+  async getDomainBids (domain_name: string): Promise<DomainBids | undefined> {
     const data = await this.tonApi.get(`dns/${domain_name}/bids`, {})
     
     console.log(data)
     return data
   }
 
-  async getAllAuctions (tld?: string): Promise<GetAllAuctionsDto | undefined> {
+  async getAllAuctions (tld?: string): Promise<Auctions | undefined> {
     const data = await this.tonApi.get(`dns/auctions`, { tld })
 
     console.log(data)

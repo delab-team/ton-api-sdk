@@ -1,9 +1,6 @@
 import { TonApi } from "./ton-api"
 
-import { GetJettonMetadataDto } from "../types/jettons/get-jetton-metadata.dto";
-import { GetJettonTransfersDto } from "../types/jettons/get-jetton-transfers.dto";
-import { GetJettonsHoldersDto } from "../types/jettons/get-jettons-holders.dto";
-import { GetListDto } from "../types/jettons/get-list.dto";
+import { Event, JettonHolders, JettonInfo, Jettons as JettonsDto } from '../types/common'
 
 export class Jettons {
 
@@ -16,7 +13,7 @@ export class Jettons {
   async getList(
     limit?: number,
     offset?: number
-  ): Promise<GetListDto | undefined> {
+  ): Promise<JettonsDto | undefined> {
     const data: { limit?: number; offset?: number } = {};
   
     if (limit !== undefined) {
@@ -33,7 +30,7 @@ export class Jettons {
     return result;
   }
 
-  async getJettonMetadata(account_id: string): Promise<GetJettonMetadataDto | undefined> {
+  async getJettonMetadata(account_id: string): Promise<JettonInfo | undefined> {
     const data = await this.tonApi.get('jettons', {account_id})
 
     console.log(data)
@@ -44,7 +41,7 @@ export class Jettons {
     account_id: string,
     limit?: number,
     offset?: number
-  ): Promise<GetJettonsHoldersDto | undefined> {
+  ): Promise<JettonHolders | undefined> {
     const data: { limit?: number; offset?: number } = {};
   
     if (limit !== undefined) {
@@ -64,7 +61,7 @@ export class Jettons {
     return result;
   }
 
-  async getJettonTransfers (event_id: string, accept_language?: string): Promise<GetJettonTransfersDto | undefined> {
+  async getJettonTransfers (event_id: string, accept_language?: string): Promise<Event | undefined> {
     const headers: { 'Accept-Language'?: string } = {};
     if (accept_language !== undefined) {
       headers['Accept-Language'] = accept_language;

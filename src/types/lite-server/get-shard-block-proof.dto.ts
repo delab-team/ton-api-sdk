@@ -1,14 +1,6 @@
 export interface GetShardBlockProof {
-  masterchain_id: MasterchainId
+  masterchain_id: Id
   links: Link[]
-}
-
-export interface MasterchainId {
-  workchain: number
-  shard: number
-  seqno: number
-  root_hash: string
-  file_hash: string
 }
 
 export interface Link {
@@ -17,9 +9,9 @@ export interface Link {
 }
 
 export interface Id {
-  workchain: number
-  shard: number
-  seqno: number
+  workchain: bigint
+  shard: bigint
+  seqno: bigint
   root_hash: string
   file_hash: string
 }
