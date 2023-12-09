@@ -254,7 +254,7 @@ export interface NftItem {
   verified: boolean
   metadata: any;
   sale?: Sale
-  previews?: ImagePreview
+  previews?: ImagePreview[]
   dns?: string
   approved_by: NftApprovedBy
 }
