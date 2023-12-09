@@ -1,6 +1,6 @@
 {
   "name": "@delab-team/ton-api-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Ton-Api-SDK is a library for interacting with the Ton blockchain API.",
   "repository": "https://github.com/delab-team/ton-api-sdk",
   "homepage": "https://github.com/delab-team/ton-api-sdk",
