@@ -1,4 +1,3 @@
-import { Address } from '@ton/core'
 import { TonApi } from "./ton-api";
 
 import { GetAccountsBalanceChangeDto } from "../types/accounts/get-accounts-balance-change.dto";
@@ -31,7 +30,7 @@ export class Accounts {
     this.tonApi = tonApi
   }
 
-  async getParseAddress (account_id: Address): Promise<GetParseAddressDto | undefined> {
+  async getParseAddress (account_id: string): Promise<GetParseAddressDto | undefined> {
     const data = await this.tonApi.get(`address/${account_id}/parse`, {})
 
     console.log(data)
@@ -45,14 +44,14 @@ export class Accounts {
     return data
   }
 
-  async getHumanFriendlyInfo (account_id: Address): Promise<GetHumanFriendlyInfoDto | undefined> {
+  async getHumanFriendlyInfo (account_id: string): Promise<GetHumanFriendlyInfoDto | undefined> {
     const data = await this.tonApi.get(`accounts/${account_id}`, {})
 
     console.log(data)
     return data
   }
 
-  async getAccountsDomains (account_id: Address): Promise<GetAccountsDomainsDto | undefined> {
+  async getAccountsDomains (account_id: string): Promise<GetAccountsDomainsDto | undefined> {
     const data = await this.tonApi.get(`accounts/${account_id}/dns/backresolve`, {})
 
     console.log(data)
@@ -60,7 +59,7 @@ export class Accounts {
   }
 
   async getAllJettonsBalances(
-    account_id: Address,
+    account_id: string,
     currencies?: string
   ): Promise<GetAllJettonsBalancesDto | undefined> {
     const data: { currencies?: string } = {};
@@ -79,7 +78,7 @@ export class Accounts {
   }
 
   async getTransferJettonsHistory(
-    account_id: Address,
+    account_id: string,
     limit: number,
     accept_language?: string,
     before_it?: BigInt,
@@ -121,8 +120,8 @@ export class Accounts {
   }
 
   async getTransferJettonHistory(
-    account_id: Address,
-    jetton_id: Address,
+    account_id: string,
+    jetton_id: string,
     limit: number,
     accept_language?: string,
     before_it?: bigint,
@@ -164,14 +163,14 @@ export class Accounts {
   }
 
   async getAllNftItems(
-    account_id: Address,
-    collection?: Address,
+    account_id: string,
+    collection?: string,
     limit?: number,
     offset?: number,
     indirect_ownership?: boolean
   ): Promise<GetAllNftItemsDto | undefined> {
     const data: {
-      collection?: Address;
+      collection?: string;
       limit?: number;
       offset?: number;
       indirect_ownership?: boolean;
@@ -203,7 +202,7 @@ export class Accounts {
   }
 
   async getEventsAccount(
-    account_id: Address,
+    account_id: string,
     limit: number,
     accept_language?: string,
     initiator?: boolean,
@@ -258,7 +257,7 @@ export class Accounts {
   }
 
   async getEventsAccountById(
-    account_id: Address,
+    account_id: string,
     event_id: string,
     accept_language?: string,
     subject_only?: boolean
@@ -287,7 +286,7 @@ export class Accounts {
   }
 
   async getTracesAccount(
-    account_id: Address,
+    account_id: string,
     limit?: number
   ): Promise<GetTracersAccountDto | undefined> {
     const data: { limit?: number } = {};
@@ -305,14 +304,14 @@ export class Accounts {
     return result;
   }
 
-  async getAllSubscriptions (account_id: Address): Promise<GetAllSubscriptionsDto | undefined> {
+  async getAllSubscriptions (account_id: string): Promise<GetAllSubscriptionsDto | undefined> {
     const data = await this.tonApi.get(`accounts/${account_id}/subscriptions`, {})
     
     console.log(data)
     return data
   }
 
-  async postUpdateInternalCache (account_id: Address): Promise<any | string> {
+  async postUpdateInternalCache (account_id: string): Promise<any | string> {
     const res = await this.tonApi.post(`accounts/${account_id}/reindex`, {})
 
     console.log(res)
@@ -327,7 +326,7 @@ export class Accounts {
   }
 
   async getTonDns(
-    account_id: Address,
+    account_id: string,
     period?: number
   ): Promise<GetTonDnsDto | undefined> {
     const data: { period?: number } = {};
@@ -345,14 +344,14 @@ export class Accounts {
     return result;
   }
   
-  async getPublicKey (account_id: Address): Promise<GetPublicKeyDto | undefined> {
+  async getPublicKey (account_id: string): Promise<GetPublicKeyDto | undefined> {
     const data = await this.tonApi.get(`accounts/${account_id}/publickey`, {})
 
     console.log(data)
     return data
   }
 
-  async getAccountsBalanceChange (account_id: Address, start_date: bigint, end_date: bigint): Promise<GetAccountsBalanceChangeDto | undefined> {
+  async getAccountsBalanceChange (account_id: string, start_date: bigint, end_date: bigint): Promise<GetAccountsBalanceChangeDto | undefined> {
     const data = await this.tonApi.get(`accounts/${account_id}/diff`, { start_date, end_date })
 
     console.log(data)

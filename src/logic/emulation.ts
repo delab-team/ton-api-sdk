@@ -1,4 +1,3 @@
-import { Address } from "@ton/core";
 
 import { TonApi } from "./ton-api";
 
@@ -60,7 +59,7 @@ export class Emulation {
   }  
 
   async postMessageBlockchain(
-    account_id: Address,
+    account_id: string,
     message: PostMessageType,
     accept_language?: string
   ): Promise<AccountEvent | undefined> {
